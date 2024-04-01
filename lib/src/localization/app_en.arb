@@ -1,0 +1,6 @@
+{
+  "appTitle": "gcaller",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
