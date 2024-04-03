@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gcaller/contact.dart';
 import 'package:gcaller/mainprofilescreen.dart';
+import 'package:gcaller/onboarding/reward_splash_screen.dart';
+import 'package:gcaller/onboarding/test.dart';
 import 'package:gcaller/src/calllog.dart';
 
 void main() async {
@@ -14,11 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Restaurant app',
-        home: const CallLogScreen());
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false, title: 'Gcaller', home: Hello());
   }
 }
