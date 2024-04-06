@@ -1,11 +1,7 @@
-import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gcaller/contact.dart';
-import 'package:gcaller/mainprofilescreen.dart';
-import 'package:gcaller/onboarding/reward_splash_screen.dart';
-import 'package:gcaller/onboarding/test.dart';
-import 'package:gcaller/src/calllog.dart';
+import 'package:gcaller/onboarding/rewardsplashscreen.dart';
+
 
 void main() async {
   runApp(MyApp());
@@ -19,6 +15,8 @@ class MyApp extends StatelessWidget {
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, title: 'Gcaller', home: Hello());
+        debugShowCheckedModeBanner: false,
+        title: 'Gcaller',
+        home: RewardSplash());
   }
 }
