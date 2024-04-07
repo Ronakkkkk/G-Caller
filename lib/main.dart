@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gcaller/onboarding/rewardsplashscreen.dart';
-
+import 'package:gcaller/screens/profile.dart';
 
 void main() async {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!await FlutterOverlayWindows.isPermissionGranted()) runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -17,6 +17,6 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Gcaller',
-        home: RewardSplash());
+        home: ProfileScreen());
   }
 }
