@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "756210955955",
+    "project_id": "gcaller-c65f9",
+    "storage_bucket": "gcaller-c65f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756210955955:android:7caa027250b1c58e67a2c6",
+        "android_client_info": {
+          "package_name": "com.example.gcallerr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-g1Ny-GnCFTQ0PM2TRw6W6644p-q7nV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
