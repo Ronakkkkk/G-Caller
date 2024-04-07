@@ -10,7 +10,7 @@ class Reward extends StatefulWidget {
 }
 
 class _RewardState extends State<Reward> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
   Widget buildTickRow(String text1, String text2, String text3) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
