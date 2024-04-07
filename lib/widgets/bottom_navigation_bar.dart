@@ -19,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      selectedItemColor: Colors.teal,
+      selectedItemColor: Color(0xff1B64FF),
       unselectedItemColor: kPrimaryColor,
       showUnselectedLabels: true,
       currentIndex: widget.selectedIndex,
@@ -33,15 +33,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const CallLogScreen()));
             break;
+
           case 2:
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const CallLogScreen()));
-            break;
-          case 3:
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const Reward()));
             break;
-          case 4:
+          case 3:
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ProfileScreen()));
             break;
@@ -57,10 +54,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
         BottomNavigationBarItem(
           icon: Icon(Icons.call),
           label: 'Calls',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.message),
-          label: 'Messages',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.card_giftcard),
