@@ -12,7 +12,7 @@ class CallLogScreen extends StatefulWidget {
 }
 
 class _CallLogScreenState extends State<CallLogScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   List<CallLogEntry> _callLogs = [];
 
   @override
