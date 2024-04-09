@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:gcaller/constants/colors.dart';
+import 'package:gcaller/onboarding/welcome.dart';
 import 'package:gcaller/widgets/bottom_navigation_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -14,6 +17,7 @@ class ContactScreen extends StatefulWidget {
 class _ContactScreenState extends State<ContactScreen> {
   int _selectedIndex = 0;
   List<Contact> _contacts = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController _searchController = TextEditingController();
 
   @override
@@ -29,6 +33,32 @@ class _ContactScreenState extends State<ContactScreen> {
       _getContacts();
     } else {
       print('Permission denied');
+    }
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    // try {
+    //   await FirebaseAuth.instance.signOut();
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+    // } catch (e) {
+    //   print('Error signing out: $e');
+    // }
+    try {
+      await _auth.signOut(); // Sign out from Firebase Auth
+
+      // If using Google Sign-In, sign out from Google as well
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.signOut();
+
+      // Navigate to sign-in screen or any other screen as needed
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  WelcomeScreen())); // Navigate back to the previous screen
+    } catch (e) {
+      print("Error signing out: $e");
     }
   }
 
@@ -108,7 +138,7 @@ class _ContactScreenState extends State<ContactScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xff1B64FF),
           onPressed: () {
-            //Contacts add function
+            _signOut(context);
           },
           child: Icon(
             Icons.person_add,
