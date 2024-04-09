@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gcaller/constants/colors.dart';
 
 import 'package:gcaller/widgets/bottom_navigation_bar.dart';
 
@@ -11,6 +14,9 @@ class Reward extends StatefulWidget {
 
 class _RewardState extends State<Reward> {
   int _selectedIndex = 2;
+  int newContactsCount = 0;
+  int existingContactsCount = 0;
+  int totalPoints = 0;
   Widget buildTickRow(String text1, String text2, String text3) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -56,6 +62,33 @@ class _RewardState extends State<Reward> {
     );
   }
 
+  Future<void> fetchData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
+            .instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+
+        setState(() {
+          newContactsCount = userDoc['newContactsCount'] ?? 0;
+          existingContactsCount = userDoc['existingContactsCount'] ?? 0;
+          totalPoints = userDoc['gcallamount'] ?? 0;
+        });
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,13 +107,13 @@ class _RewardState extends State<Reward> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Image(
-                  height: 301,
-                  width: 301,
+                  height: 250,
+                  width: 250,
                   fit: BoxFit.cover,
                   image: NetworkImage(
                       'https://s3-alpha-sig.figma.com/img/93d8/e723/afb0784d3b9dba31697049a81c75d9d4?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RLwx9fQoWK5AX6jF30ZQtzwz2W19E~k6mJcU2-M7h033oZz6iwUEzu7NEVOB91OXKGX42PPnWzUZ6B-DEpRIWsryFwYg316Ye9398nqxDXM7cJTGnim2QUXSWGPDsMpfvryr~PbSCosf4Z7K5tS5Gz9T1GQNeP2nxH7qnp3t2UajDJckIeL5e7YCiKXIWcnJww310seAUh8lAFqclaKEsegAwYPEp~aOvmSQwvk5QHk2rOvX-xT~kDNs6XhhVAER-tK2RbpKK9aHGU2dmYxKUvFmLab83mBzCuzDRb4dziiYBh02OfblxPB-~hjYVhGxSHEwKoQ9fCllaEXILg44~Q__')),
               const Text(
-                'Here is your \n welcome gift!',
+                'Your current points!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 26,
@@ -89,7 +122,44 @@ class _RewardState extends State<Reward> {
                     color: Color(0xff293B57)),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: 40,
+              ),
+              Container(
+                height: 98,
+                width: 292,
+                decoration: BoxDecoration(
+                  color: Color(0xffFCE5C3),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '$totalPoints',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'GCALL',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w800,
+                        color: kPrimaryColor,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
               ),
               Container(
                 padding: const EdgeInsets.all(20),
@@ -100,12 +170,14 @@ class _RewardState extends State<Reward> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     buildTickRow('+500 \$GCALL', " welcome bonus", ""),
-                    buildTickRow(
-                        '+ 10  \$GCALL ', "for tagging every ", "new contact"),
+                    buildTickRow('+ ${newContactsCount * 5}  \$GCALL ',
+                        "for tagging every ", "new contact"),
                     SizedBox(
                       height: 10,
                     ),
-                    buildTickRow('+5  \$GCALL', "for importing each ",
+                    buildTickRow(
+                        '+${existingContactsCount * 1}  \$GCALL',
+                        "for importing each ",
                         "existing contact into GCall App"),
                   ],
                 ),
