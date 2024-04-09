@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -85,6 +87,35 @@ Widget button() {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   int _selectedIndex = 3;
+  int totalPoints = 0;
+  late User? user;
+
+  Future<void> fetchData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
+            .instance
+            .collection('Users')
+            .doc(user.uid)
+            .get();
+
+        setState(() {
+          totalPoints = userDoc['gcallamount'] ?? 0;
+        });
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+    user = FirebaseAuth.instance.currentUser;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.white,
                       ),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Center(
@@ -176,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'John Singh',
+                                  user?.displayName ?? 'John Singh',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontFamily: 'Montserrat',
@@ -267,7 +298,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Row(
+                          Row(
                             children: [
                               Icon(
                                 Icons.wallet,
@@ -277,7 +308,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 width: 10,
                               ),
                               Text(
-                                '700 GCAL',
+                                '$totalPoints GCAL',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontFamily: 'Montserrat',
