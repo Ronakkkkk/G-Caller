@@ -134,17 +134,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                 onTap: () async {
                   if (await FlutterOverlayWindow.isActive()) return;
-                  await FlutterOverlayWindow.showOverlay(
-                    enableDrag: true,
-                    overlayTitle: "GCALLER",
-                    overlayContent: 'Spam Business Detected',
-                    flag: OverlayFlag.defaultFlag,
-                    visibility: NotificationVisibility.visibilityPublic,
-                    positionGravity: PositionGravity.auto,
-                    height: (MediaQuery.of(context).size.height * 0.6).toInt(),
-                    width: WindowSize.matchParent,
-                    startPosition: const OverlayPosition(0, 0),
-                  );
                 },
                 child: Container(
                     color: const Color(0xffEDA9EA),
