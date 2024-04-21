@@ -117,13 +117,10 @@ class _RewardSplashState extends State<RewardSplash> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Image(
-                height: 250,
-                width: 250,
-                fit: BoxFit.fill,
-                image: NetworkImage(
-                  'https://s3-alpha-sig.figma.com/img/93d8/e723/afb0784d3b9dba31697049a81c75d9d4?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=RLwx9fQoWK5AX6jF30ZQtzwz2W19E~k6mJcU2-M7h033oZz6iwUEzu7NEVOB91OXKGX42PPnWzUZ6B-DEpRIWsryFwYg316Ye9398nqxDXM7cJTGnim2QUXSWGPDsMpfvryr~PbSCosf4Z7K5tS5Gz9T1GQNeP2nxH7qnp3t2UajDJckIeL5e7YCiKXIWcnJww310seAUh8lAFqclaKEsegAwYPEp~aOvmSQwvk5QHk2rOvX-xT~kDNs6XhhVAER-tK2RbpKK9aHGU2dmYxKUvFmLab83mBzCuzDRb4dziiYBh02OfblxPB-~hjYVhGxSHEwKoQ9fCllaEXILg44~Q__',
-                ),
-              ),
+                  height: 250,
+                  width: 250,
+                  fit: BoxFit.fill,
+                  image: AssetImage('assets/images/gift.png')),
               const Text(
                 'Here is your welcome gift!',
                 textAlign: TextAlign.center,
