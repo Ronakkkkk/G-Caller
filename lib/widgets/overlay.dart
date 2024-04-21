@@ -1,38 +1,63 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:gcaller/widgets/contact_stream.dart';
 
 class TrueCallerOverlay extends StatefulWidget {
-  const TrueCallerOverlay({Key? key}) : super(key: key);
+  const TrueCallerOverlay({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<TrueCallerOverlay> createState() => _TrueCallerOverlayState();
 }
 
-Widget iconss() {
+Widget contactInitialIcon(String? contactName, bool isredoverlay) {
+  String initial =
+      contactName?.isNotEmpty == true ? contactName![0].toUpperCase() : 'U';
   return Container(
     margin: const EdgeInsets.only(left: 20),
     height: 70.0,
     width: 70.0,
-    decoration:
-        const BoxDecoration(shape: BoxShape.circle, color: Color(0xffFDADA6)),
-    child: const Icon(
-      Icons.security_outlined,
-      size: 40,
-      color: Color(0xffFE4433),
+    decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color(isredoverlay ? 0xffBEE3DC : 0xffBEE3DC)),
+    child: Center(
+      child: isredoverlay
+          ? const Icon(
+              Icons.security_outlined,
+              size: 40,
+              color: Color(0xffFE4433),
+            )
+          : Text(
+              initial,
+              style: const TextStyle(fontSize: 40, color: Color(0xff349484)),
+            ),
     ),
   );
 }
 
 class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
+  String? callerNumber;
+  String? contactName;
+
   @override
   void initState() {
     super.initState();
+    // Listen for data shared from the main app
+    FlutterOverlayWindow.overlayListener.listen((data) {
+      setState(() {
+        callerNumber = data['callerNumber'];
+        contactName = data['contactName'];
+      });
+      print('$contactName:$callerNumber');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Check if callerNumber matches specific numbers
+    bool isRedOverlay = callerNumber == '9818383799'; // Example spam number
+
     return Material(
       color: Colors.transparent,
       child: Center(
@@ -40,27 +65,32 @@ class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xffFF4130),
+            color: isRedOverlay
+                ? const Color(0xffFF4130)
+                : const Color(0xff0086FF),
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: GestureDetector(
             onTap: () {},
             child: Stack(
               children: [
-                // ignore: prefer_const_constructors
                 Column(
                   children: [
                     Row(
                       children: [
-                        iconss(),
+                        contactInitialIcon(
+                            contactName, isRedOverlay ? true : false),
                         const SizedBox(
                           width: 15,
                         ),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Display contact name
                             Text(
-                              "Spam Business",
+                              isRedOverlay
+                                  ? 'Spam Caller'
+                                  : contactName ?? 'Unknown Caller',
                               style: TextStyle(
                                   fontSize: 20.0,
                                   color: Colors.white,
@@ -68,7 +98,9 @@ class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
                                   fontFamily: "Montserrat"),
                             ),
                             Text(
-                              'SALES . 450 spam reports',
+                              isRedOverlay
+                                  ? 'SALES . 450 spam reports'
+                                  : 'Banglore, India',
                               style: TextStyle(
                                   fontFamily: "Montserrat",
                                   fontSize: 12,
@@ -89,7 +121,9 @@ class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
                                   width: 10,
                                 ),
                                 Text(
-                                  'Finance / Insurance',
+                                  isRedOverlay
+                                      ? 'Finance / Insurance'
+                                      : 'From Contacts',
                                   style: TextStyle(
                                       fontFamily: "Montserrat",
                                       fontSize: 10,
@@ -106,7 +140,7 @@ class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
                       color: Colors.white,
                       thickness: 0.2,
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,15 +148,16 @@ class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // Display contact number
                               Text(
-                                "+91 09230526844",
+                                callerNumber ?? '00000000',
                                 style: TextStyle(
                                     fontFamily: "Montserrat",
                                     fontSize: 11,
                                     color: Colors.white),
                               ),
                               Text(
-                                "Attempted Last call 2 days ago",
+                                "Mobile - AirTel - Last call 0 min ago",
                                 style: TextStyle(
                                     fontFamily: "Montserrat",
                                     fontSize: 11,
