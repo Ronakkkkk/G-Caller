@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:call_log/call_log.dart';
+import 'package:gcaller/views/call_detect.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:intl/intl.dart';
 
@@ -162,7 +163,8 @@ class _CallLogScreenState extends State<CallLogScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xff1B64FF),
         onPressed: () {
-          //Contacts add function
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Calldetectpage()));
         },
         child: const Icon(
           Icons.call,
