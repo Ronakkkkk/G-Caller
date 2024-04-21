@@ -22,17 +22,21 @@ dependencies:
   neopop: ^1.0.2
   permission_handler: ^11.0.1
   sign_in_button: ^3.2.0
-  google_sign_in: ^5.2.1
+  google_sign_in: ^6.2.1
   http: ^1.2.1
   cloud_firestore: ^4.16.0
   phone_number: ^2.1.0
+  phone_state: ^1.0.4
+  stacked: ^3.4.2
+  oauth2_client: ^3.2.2
+  
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+ 
 
 flutter:
   uses-material-design: true
