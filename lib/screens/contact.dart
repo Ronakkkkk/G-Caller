@@ -1,11 +1,14 @@
+import 'dart:io';
+import 'package:gcaller/widgets/contact_stream.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:phone_state/phone_state.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:gcaller/constants/colors.dart';
 import 'package:gcaller/onboarding/welcome.dart';
 import 'package:gcaller/widgets/bottom_navigation_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class _ContactScreenState extends State<ContactScreen> {
   void initState() {
     super.initState();
     _getContacts();
+    // Add this line to set up phone state listener
   }
 
   Future<void> _requestPermissions() async {
@@ -37,13 +41,6 @@ class _ContactScreenState extends State<ContactScreen> {
   }
 
   Future<void> _signOut(BuildContext context) async {
-    // try {
-    //   await FirebaseAuth.instance.signOut();
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
-    // } catch (e) {
-    //   print('Error signing out: $e');
-    // }
     try {
       await _auth.signOut(); // Sign out from Firebase Auth
 
@@ -68,8 +65,15 @@ class _ContactScreenState extends State<ContactScreen> {
       setState(() {
         _contacts = contacts;
       });
+      _emitAllContactsToStream();
     } else {
       _requestPermissions();
+    }
+  }
+
+  void _emitAllContactsToStream() {
+    for (final contact in _contacts) {
+      ContactStream.addContact(contact); // Add each contact to the stream
     }
   }
 
