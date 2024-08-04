@@ -30,6 +30,8 @@ dependencies:
   stacked: ^3.4.2
   oauth2_client: ^3.2.2
   okto_flutter_sdk: ^0.0.13
+  dotenv: ^4.2.0
+  flutter_dotenv: ^5.1.0
   
   
 
