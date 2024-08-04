@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:gcaller/firebase_options.dart';
 import 'package:gcaller/onboarding/rewardsplashscreen.dart';
@@ -14,6 +15,7 @@ import 'package:gcaller/widgets/overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   if (!await FlutterOverlayWindow.isPermissionGranted()) {
