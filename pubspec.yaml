@@ -29,6 +29,7 @@ dependencies:
   phone_state: ^1.0.4
   stacked: ^3.4.2
   oauth2_client: ^3.2.2
+  okto_flutter_sdk: ^0.0.13
   
   
 
