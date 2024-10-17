@@ -553,10 +553,10 @@ packages:
     dependency: "direct main"
     description:
       name: okto_flutter_sdk
-      sha256: "7a08639165bad79246c1e87b38c530541b9827d63597a5945b5a7c55abaac65b"
+      sha256: "4b37ed138de0cfe0354e48ff22f5a34d5567f542e7f1780f79d3bbc0e66c7545"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.13"
+    version: "0.0.16"
   path:
     dependency: transitive
     description:
