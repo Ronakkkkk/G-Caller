@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:gcaller/constants/colors.dart';
-import 'package:gcaller/onboarding/authentication_logic.dart';
+
 import 'package:gcaller/onboarding/rewardsplashscreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_button/sign_in_button.dart';
@@ -59,7 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
         print(idToken);
 
         if (idToken != null) {
-          await ApiHandler.authenticateWithToken(idToken);
+          // await ApiHandler.authenticateWithToken(idToken);
           await _writeDataToFirestore(context);
 
           _navigateToRewardSplash();
