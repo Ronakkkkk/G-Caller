@@ -100,88 +100,90 @@ class _RewardState extends State<Reward> {
           });
         },
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Image(
-                  height: 250,
-                  width: 250,
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/gift.png')),
-              const Text(
-                'Your current points!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 26,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff293B57)),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                height: 98,
-                width: 292,
-                decoration: BoxDecoration(
-                  color: Color(0xffFCE5C3),
-                  borderRadius: BorderRadius.circular(15),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Image(
+                    height: 250,
+                    width: 250,
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/gift.png')),
+                const Text(
+                  'Your current points!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 26,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff293B57)),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '$totalPoints',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  height: 98,
+                  width: 292,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFCE5C3),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '$totalPoints',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: kPrimaryColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'GCALL',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w800,
-                        color: kPrimaryColor,
+                      SizedBox(
+                        width: 5,
                       ),
-                    )
-                  ],
+                      Text(
+                        'GCALL',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w800,
+                          color: kPrimaryColor,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              Container(
-                padding: const EdgeInsets.all(20),
-                height: 183,
-                width: 312,
-                color: const Color(0xffFFFFFF),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildTickRow('+500 \$GCALL', " welcome bonus", ""),
-                    buildTickRow('+ ${newContactsCount * 5}  \$GCALL ',
-                        "for tagging every ", "new contact"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    buildTickRow(
-                        '+${existingContactsCount * 1}  \$GCALL',
-                        "for importing each ",
-                        "existing contact into GCall App"),
-                  ],
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  height: 183,
+                  width: 312,
+                  color: const Color(0xffFFFFFF),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildTickRow('+500 \$GCALL', " welcome bonus", ""),
+                      buildTickRow('+ ${newContactsCount * 5}  \$GCALL ',
+                          "for tagging every ", "new contact"),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildTickRow(
+                          '+${existingContactsCount * 1}  \$GCALL',
+                          "for importing each ",
+                          "existing contact into GCall App"),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
