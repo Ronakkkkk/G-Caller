@@ -64,6 +64,7 @@ class _TrueCallerOverlayState extends State<TrueCallerOverlay> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           width: double.infinity,
+          height: 180,
           decoration: BoxDecoration(
             color: isRedOverlay
                 ? const Color(0xffFF4130)
