@@ -15,7 +15,7 @@ import 'package:gcaller/widgets/overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   if (!await FlutterOverlayWindow.isPermissionGranted()) {
@@ -27,7 +27,7 @@ void main() async {
   Widget initialRoute = user != null ? ContactScreen() : WelcomeScreen();
   ;
   PhoneStateListener().initialize();
-  runApp(MyApp(initialRoute: initialRoute));
+  runApp(MyApp(initialRoute: ContactScreen()));
 }
 
 class MyApp extends StatelessWidget {
