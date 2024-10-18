@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:gcaller/constants/colors.dart';
-
-import 'package:gcaller/onboarding/rewardsplashscreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:gcaller/onboarding/rewardsplashscreen.dart';
+import 'package:gcaller/utils/global.dart';
+import 'package:gcaller/utils/okto.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -16,6 +17,16 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  Globals globals1 = Globals.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'openid',
+    ],
+    forceCodeForRefreshToken: true,
+  );
+  String error = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
@@ -32,45 +43,26 @@ class _SignInScreenState extends State<SignInScreen> {
     });
 
     try {
-      final User? currentUser = _auth.currentUser;
-
-      if (currentUser != null) {
-        // User is already signed in, navigate to RewardSplash directly
-        _navigateToRewardSplash();
-        return;
-      }
-
-      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
-
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
-
-        final String? idToken = await userCredential.user!.getIdToken();
-
-        print(idToken);
-
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      if (googleAuth != null) {
+        final String? idToken = googleAuth.idToken;
+        print("ID Token: $idToken"); // Log the ID token for debugging
         if (idToken != null) {
-          // await ApiHandler.authenticateWithToken(idToken);
+          await okto!.authenticate(idToken: idToken);
           await _writeDataToFirestore(context);
-
           _navigateToRewardSplash();
         } else {
-          print("ID Token is null");
+          throw Exception("ID Token is null");
         }
       }
     } catch (error) {
-      print("Something went wrong. Please try again");
-      print(error);
-      _showSnackBar('Something went wrong. Please try again');
+      print("Detailed error: $error");
+      if (error is Exception) {
+        print("Exception details: ${error.toString()}");
+      }
+      _showSnackBar('Sign-in failed: ${error.toString()}');
     } finally {
       setState(() {
         _isLoading = false;
@@ -183,6 +175,11 @@ class _SignInScreenState extends State<SignInScreen> {
     } catch (error) {
       print('Error updating contacts count: $error');
     }
+  }
+
+  initState() {
+    super.initState();
+    print(globals1.getOktoApiKey());
   }
 
   @override
